@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+build/
+
+# AWS SAM
+.aws-sam/
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets and credentials
+*.pem
+*.key
+credentials
