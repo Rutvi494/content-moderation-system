@@ -1,27 +1,37 @@
-# Design a Content Moderation System Using AI
+## Day 4 - Amazon API Gateway
 
-An AWS-based AI content moderation system that analyzes user-generated
-text and images and classifies content as:
+Exposed the serverless moderation backend through an Amazon API Gateway HTTP API.
 
-- APPROVE
-- REVIEW
-- BLOCK
+### API Endpoints
 
-## Week 1 Scope
+#### Generate image upload URL
 
-The first milestone focuses on image moderation using:
+POST /uploads/presigned-url
 
-- Amazon S3
-- AWS Lambda
-- Amazon Rekognition
-- Amazon DynamoDB
-- Amazon API Gateway
+Request:
 
-## Planned Workflow
+{
+  "file_name": "image.jpg",
+  "content_type": "image/jpeg"
+}
 
-1. The user selects an image.
-2. The application generates a presigned S3 upload URL.
-3. The image is uploaded to a private S3 bucket.
-4. Amazon Rekognition analyzes the image.
-5. A policy engine returns APPROVE, REVIEW, or BLOCK.
-6. The moderation result is stored in DynamoDB.
+#### Moderate uploaded image
+
+POST /moderation/image
+
+Request:
+
+{
+  "user_id": "user-101",
+  "object_key": "uploads/image-id.jpg"
+}
+
+### Request Flow
+
+Client
+→ API Gateway
+→ AWS Lambda
+→ Amazon S3 / Amazon Rekognition
+→ DynamoDB
+
+CORS is enabled for development so the future React frontend can call the API.
