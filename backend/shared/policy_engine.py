@@ -2,27 +2,21 @@ def make_image_decision(labels):
     block_categories = {
         "Explicit Nudity",
         "Sexual Activity",
-        "Graphic Violence"
+        "Graphic Violence",
     }
 
     review_categories = {
         "Suggestive",
         "Violence",
         "Weapons",
-        "Drugs"
+        "Drugs",
     }
 
     highest_confidence = 0
 
     for label in labels:
-        confidence = float(
-            label["confidence"]
-        )
-
-        highest_confidence = max(
-            highest_confidence,
-            confidence
-        )
+        confidence = float(label["confidence"])
+        highest_confidence = max(highest_confidence, confidence)
 
         if (
             label["name"] in block_categories
@@ -31,16 +25,11 @@ def make_image_decision(labels):
             return (
                 "BLOCK",
                 round(confidence / 100, 2),
-                (
-                    f'{label["name"]} detected '
-                    f'with {confidence}% confidence'
-                )
+                f'{label["name"]} detected with {confidence}% confidence',
             )
 
     for label in labels:
-        confidence = float(
-            label["confidence"]
-        )
+        confidence = float(label["confidence"])
 
         if (
             label["name"] in review_categories
@@ -49,14 +38,11 @@ def make_image_decision(labels):
             return (
                 "REVIEW",
                 round(confidence / 100, 2),
-                (
-                    f'{label["name"]} detected '
-                    f'with {confidence}% confidence'
-                )
+                f'{label["name"]} detected with {confidence}% confidence',
             )
 
     return (
         "APPROVE",
         round(highest_confidence / 100, 2),
-        "No prohibited moderation category detected"
+        "No prohibited moderation category detected",
     )

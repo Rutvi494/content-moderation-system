@@ -1,37 +1,25 @@
-## Day 4 - Amazon API Gateway
+## Day 5 - React Image Moderation Interface
 
-Exposed the serverless moderation backend through an Amazon API Gateway HTTP API.
+Built a React frontend for the image moderation workflow.
 
-### API Endpoints
+### Features
 
-#### Generate image upload URL
+- JPEG and PNG image selection
+- Client-side file validation
+- Image preview
+- Secure direct upload to Amazon S3 using presigned URLs
+- Image moderation through Amazon Rekognition
+- APPROVE, REVIEW, and BLOCK decisions
+- Moderation confidence display
+- Error and loading states
 
-POST /uploads/presigned-url
+### Frontend Flow
 
-Request:
-
-{
-  "file_name": "image.jpg",
-  "content_type": "image/jpeg"
-}
-
-#### Moderate uploaded image
-
-POST /moderation/image
-
-Request:
-
-{
-  "user_id": "user-101",
-  "object_key": "uploads/image-id.jpg"
-}
-
-### Request Flow
-
-Client
+React
 → API Gateway
-→ AWS Lambda
-→ Amazon S3 / Amazon Rekognition
+→ Presigned URL Lambda
+→ Amazon S3
+→ Moderation API
+→ Amazon Rekognition
 → DynamoDB
-
-CORS is enabled for development so the future React frontend can call the API.
+→ React moderation result
